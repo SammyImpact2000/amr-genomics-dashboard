@@ -1,0 +1,7 @@
+antibiotic,tested,resistant_1,susceptible_0,resistant_pct,susceptible_pct,missing,imbalance_ratio
+meropenem,6103,2760,3343,45.22,54.78,812,1.21:1
+ceftriaxone,4313,3350,963,77.67,22.33,2602,3.48:1
+ciprofloxacin,6127,4332,1795,70.7,29.3,788,2.41:1
+gentamicin,6579,2662,3917,40.46,59.54,336,1.47:1
+ampicillin,4632,4612,20,99.57,0.43,2283,230.60:1
+trimethoprim-sulfamethoxazole,5373,3837,1536,71.41,28.59,1542,2.50:1

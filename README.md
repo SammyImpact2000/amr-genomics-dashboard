@@ -1,5 +1,11 @@
 # 🧬 *Klebsiella pneumoniae* AMR Genomics & Explainable ML Dashboard
 
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://amr-genomics-dashboard-bdiojzzrq6kfvnni9f4yhe.streamlit.app/)
+![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)
+![XGBoost + SHAP](https://img.shields.io/badge/Explainable%20ML-XGBoost%20%2B%20SHAP-10b981)
+
+> **Live Demo:** [Launch the Interactive AMR Genomics Dashboard](https://amr-genomics-dashboard-bdiojzzrq6kfvnni9f4yhe.streamlit.app/)
+
 An end-to-end clinical genomics and explainable machine learning dashboard for predicting phenotypic antimicrobial resistance (AMR) in ***Klebsiella pneumoniae*** (NCBI Taxon ID `573`) directly from curated resistance gene profiles, paired with global population surveillance analytics.
 
 ---

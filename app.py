@@ -927,6 +927,15 @@ def render_antibiogram_view(
     )
     top_df["color"] = np.where(top_df["shap_value"] >= 0, "#ef4444", "#10b981")
 
+    st.markdown(
+        f"**SHAP Feature Contributions for {DRUG_DISPLAY[selected_drug][0]}** "
+        f"(Predicted Resistance Probability: **{pred_prob * 100:.1f}%** | "
+        f"Base Log-Odds: `{base_val:+.2f}`)"
+    )
+
+    min_val = min(float(top_df["shap_value"].min()), -0.1)
+    max_val = max(float(top_df["shap_value"].max()), 0.1)
+
     fig = go.Figure(
         go.Bar(
             x=top_df["shap_value"],
@@ -935,6 +944,7 @@ def render_antibiogram_view(
             marker_color=top_df["color"],
             text=[f"{v:+.3f}" for v in top_df["shap_value"]],
             textposition="outside",
+            cliponaxis=False,
             hovertemplate=(
                 "<b>%{customdata[0]}</b><br>"
                 "Status: %{customdata[1]}<br>"
@@ -950,18 +960,17 @@ def render_antibiogram_view(
     )
     fig.add_vline(x=0, line_width=1.2, line_color="rgba(148,163,184,0.6)")
     fig.update_layout(
-        title=(
-            f"SHAP Feature Contributions for {DRUG_DISPLAY[selected_drug][0]} "
-            f"(Predicted Resistance Probability: {pred_prob * 100:.1f}% | Base Log-Odds: {base_val:+.2f})"
+        xaxis=dict(
+            range=[min_val * 1.25, max_val * 1.25],
+            title="SHAP Value (Log-Odds Impact: + pushes Resistant, − pushes Susceptible)",
         ),
-        xaxis_title="SHAP Value (Log-Odds Impact: + pushes Resistant, − pushes Susceptible)",
         yaxis_title="",
-        height=max(380, top_n * 30 + 90),
-        margin=dict(l=10, r=60, t=55, b=45),
+        height=max(390, top_n * 30 + 95),
+        margin=dict(l=220, r=70, t=70, b=45),
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
     )
-    st.plotly_chart(fig, width="stretch")
+    st.plotly_chart(fig, width="stretch", config={"displayModeBar": False})
 
 
 # ---------------------------------------------------------------------------
@@ -1205,10 +1214,12 @@ def render_surveillance_view(labels: pd.DataFrame, surv: pd.DataFrame) -> None:
             },
             title=f"Top Isolation Countries — {DRUG_DISPLAY[geo_drug][0]} Resistance Rate",
         )
-        fig_geo.update_traces(textposition="outside")
+        max_count = int(geo_top["tested"].max()) if not geo_top.empty else 100
+        fig_geo.update_traces(textposition="outside", cliponaxis=False)
         fig_geo.update_layout(
+            xaxis=dict(range=[0, max_count * 1.45]),
             height=430,
-            margin=dict(r=80),
+            margin=dict(r=40),
             paper_bgcolor="rgba(0,0,0,0)",
             plot_bgcolor="rgba(0,0,0,0)",
         )
